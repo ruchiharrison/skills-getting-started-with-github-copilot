@@ -142,3 +142,48 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+/* Participants section styles */
+.participants {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #e0e0e0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.participants-list {
+  list-style: disc;
+  margin: 8px 0 0 20px;
+  padding: 0;
+}
+
+.participant-item {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Small circular badge with initials */
+.initials {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background-color: #1a237e;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Participant email text */
+.participant-email {
+  color: #333;
+  font-size: 0.95rem;
+  word-break: break-all;
+}

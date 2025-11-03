@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Clear loading message
       activitiesList.innerHTML = "";
 
+      // Reset activity select (keep placeholder)
+      activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
+
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
@@ -20,12 +23,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        // Basic info
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
         `;
+
+        // Participants section (DOM-built for safety/styling)
+        const participantsDiv = document.createElement("div");
+        participantsDiv.className = "participants";
+
+        const title = document.createElement("strong");
+        title.textContent = `Participants (${details.participants.length}):`;
+        participantsDiv.appendChild(title);
+
+        const ul = document.createElement("ul");
+        ul.className = "participants-list";
+
+        if (!details.participants || details.participants.length === 0) {
+          const li = document.createElement("li");
+          li.className = "participant-item";
+          li.textContent = "No participants yet";
+          ul.appendChild(li);
+        } else {
+          details.participants.forEach((p) => {
+            const li = document.createElement("li");
+            li.className = "participant-item";
+
+            // Compute simple initials from localpart (before @) splitting on common separators
+            const local = String(p).split("@")[0] || "";
+            const parts = local.split(/[\._\-]/).filter(Boolean);
+            let initials = (parts.length ? parts.map(s => s[0]).join("") : local.slice(0,2)).toUpperCase();
+            initials = initials.slice(0,2);
+
+            const badge = document.createElement("span");
+            badge.className = "initials";
+            badge.textContent = initials;
+
+            const label = document.createElement("span");
+            label.className = "participant-email";
+            label.textContent = p;
+
+            li.appendChild(badge);
+            li.appendChild(label);
+            ul.appendChild(li);
+          });
+        }
+
+        participantsDiv.appendChild(ul);
+        activityCard.appendChild(participantsDiv);
 
         activitiesList.appendChild(activityCard);
 
