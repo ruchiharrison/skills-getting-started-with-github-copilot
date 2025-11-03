@@ -66,9 +66,23 @@ document.addEventListener("DOMContentLoaded", () => {
             label.className = "participant-email";
             label.textContent = p;
 
-            li.appendChild(badge);
-            li.appendChild(label);
-            ul.appendChild(li);
+              // Delete button to unregister participant
+              const delBtn = document.createElement("button");
+              delBtn.className = "participant-delete";
+              delBtn.title = "Remove participant";
+              delBtn.innerHTML = '&times;';
+
+              // Click handler for deleting a participant
+              delBtn.addEventListener("click", async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                await unregisterParticipant(name, p);
+              });
+
+              li.appendChild(badge);
+              li.appendChild(label);
+              li.appendChild(delBtn);
+              ul.appendChild(li);
           });
         }
 
@@ -110,6 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
+        // Refresh activities so the newly signed-up participant appears immediately
+        fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";
@@ -131,4 +147,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+  
+  // Unregister helper: calls backend to remove participant then refreshes list
+  async function unregisterParticipant(activityName, email) {
+    try {
+      const res = await fetch(
+        `/activities/${encodeURIComponent(activityName)}/participants?email=${encodeURIComponent(email)}`,
+        { method: "DELETE" }
+      );
+
+      const payload = await res.json();
+      if (res.ok) {
+        // refresh activities to show updated participants
+        fetchActivities();
+      } else {
+        console.error("Failed to unregister:", payload);
+        // optionally show a message to the user
+        messageDiv.textContent = payload.detail || payload.message || "Failed to remove participant";
+        messageDiv.className = "error";
+        messageDiv.classList.remove("hidden");
+        setTimeout(() => messageDiv.classList.add("hidden"), 5000);
+      }
+    } catch (err) {
+      console.error("Error unregistering participant:", err);
+      messageDiv.textContent = "Failed to remove participant. Please try again.";
+      messageDiv.className = "error";
+      messageDiv.classList.remove("hidden");
+      setTimeout(() => messageDiv.classList.add("hidden"), 5000);
+    }
+  }
 });

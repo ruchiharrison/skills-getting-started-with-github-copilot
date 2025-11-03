@@ -153,8 +153,9 @@ footer {
 }
 
 .participants-list {
-  list-style: disc;
-  margin: 8px 0 0 20px;
+  /* hide default bullets and use custom layout */
+  list-style: none;
+  margin: 8px 0 0 0;
   padding: 0;
 }
 
@@ -186,4 +187,20 @@ footer {
   color: #333;
   font-size: 0.95rem;
   word-break: break-all;
+}
+
+/* delete button next to participant */
+.participant-delete {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #c62828;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.participant-delete:hover {
+  background-color: rgba(198,40,40,0.08);
 }
