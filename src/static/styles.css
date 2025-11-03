@@ -142,3 +142,65 @@ footer {
   padding: 20px;
   color: #666;
 }
+
+/* Participants section styles */
+.participants {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #e0e0e0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.participants-list {
+  /* hide default bullets and use custom layout */
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 0;
+}
+
+.participant-item {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Small circular badge with initials */
+.initials {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background-color: #1a237e;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Participant email text */
+.participant-email {
+  color: #333;
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+
+/* delete button next to participant */
+.participant-delete {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #c62828;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.participant-delete:hover {
+  background-color: rgba(198,40,40,0.08);
+}
